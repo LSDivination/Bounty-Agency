@@ -2,6 +2,7 @@ package dev._2lstudios.example;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import dev._2lstudios.example.commands.ExampleCommand;
 import dev._2lstudios.example.listeners.PlayerJoinListener;
 import dev._2lstudios.example.tasks.ExampleTask;
 
@@ -21,6 +22,9 @@ public class ExamplePlugin extends JavaPlugin {
         // Register the example task
         final long taskRepeatEvery = this.getConfig().getInt("task-repeat-every") * 20L;
         this.getServer().getScheduler().runTaskTimer(this, new ExampleTask(), taskRepeatEvery, taskRepeatEvery);
+
+        // Register example commands
+        new ExampleCommand().register();
     
 
     }

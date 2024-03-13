@@ -7,8 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class ModernCommand extends Command {
-    protected ModernCommand(String name) {
+public abstract class ModernCommand extends Command {
+    public ModernCommand(String name) {
         super(name);
     }
 
@@ -27,13 +27,11 @@ public class ModernCommand extends Command {
         }
     }
 
-    public void onCommand(CommandSender sender, ModernArguments args) {
-        // TODO: Override this method
-    }
-
     @Override
     public boolean execute(CommandSender sender, String label, String[] args) {
         onCommand(sender, new ModernArguments(label, args));
         return true;
     }
+
+    public abstract void onCommand(CommandSender sender, ModernArguments args);
 }

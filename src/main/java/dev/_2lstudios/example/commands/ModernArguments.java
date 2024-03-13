@@ -16,8 +16,23 @@ public class ModernArguments {
         return label;
     }
 
+    public String[] getArgs() {
+        return args;
+    }
+
+    public String[] getArgs(int index) {
+        int count = args.length - index;
+        if (count <= 0) return new String[0];
+        String[] newArgs = new String[count];
+        for (int newIndex = 0; index < count; newIndex++) {
+            newArgs[newIndex] = getText(index++);
+        }
+
+        return newArgs;
+    }
+
     public String getText(int index) {
-        if (args.length >= index) return null;
+        if (index >= args.length) return null;
 
         return args[index];
     }

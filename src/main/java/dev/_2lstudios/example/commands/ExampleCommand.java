@@ -1,17 +1,20 @@
 package dev._2lstudios.example.commands;
 
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import dev._2lstudios.example.ExamplePlugin;
+public class ExampleCommand extends ModernCommand {
+    public ExampleCommand() {
+        super("example");
+    }
 
-public class ExampleCommand implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        final String message = ExamplePlugin.getInstance().getConfig().getString("messages.from-command");
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
-        return true;
+    public void onCommand(CommandSender sender, ModernArguments args) {
+        String arg1 = args.getText(0);
+
+        if (arg1 != null) {
+            sender.sendMessage("You wrote: " + arg1);
+        } else {
+            sender.sendMessage("This is the Modern Bukkit Plugin example command");
+        }
     }
 }
