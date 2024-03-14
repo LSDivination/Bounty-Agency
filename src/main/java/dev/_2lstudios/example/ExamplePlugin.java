@@ -20,13 +20,10 @@ public class ExamplePlugin extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
 
         // Register the example task
-        final long taskRepeatEvery = this.getConfig().getInt("task-repeat-every") * 20L;
-        this.getServer().getScheduler().runTaskTimer(this, new ExampleTask(), taskRepeatEvery, taskRepeatEvery);
+        new ExampleTask().register();
 
         // Register example commands
         new ExampleCommand().register();
-    
-
     }
 
     private static ExamplePlugin instance;

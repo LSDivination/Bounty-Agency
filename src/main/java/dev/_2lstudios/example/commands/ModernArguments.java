@@ -32,7 +32,7 @@ public class ModernArguments {
     }
 
     public String getText(int index) {
-        if (index >= args.length) return null;
+        if (!hasArg(index)) return null;
 
         return args[index];
     }
@@ -55,5 +55,13 @@ public class ModernArguments {
         if (text == null) return null;
 
         return Bukkit.getPlayer(text);
+    }
+
+    public boolean hasArg(int index) {
+        return index < args.length;
+    }
+
+    public boolean hasArg() {
+        return args.length > 0;
     }
 }
