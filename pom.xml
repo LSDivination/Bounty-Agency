@@ -8,7 +8,7 @@
 
     <!-- Plugin Information -->
     <name>ExamplePlugin</name>
-    <description>This plugin was made with the Spigot Boilerplate by ArkFlame Development</description>
+    <description>This plugin was made using the Spigot Boilerplate by ArkFlame Development</description>
     <version>0.0.1</version>
     <url>https://github.com/arkflame/Spigot-Boilerplate</url>
 
