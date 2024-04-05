@@ -1,3 +1,3 @@
-# Bukkit Boilerplate
+# Spigot Boilerplate
 
-Sample project to create Plugins for Bukkit.
+All the basic functionality required for a Spigot plugin

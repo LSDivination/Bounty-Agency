@@ -1,4 +1,4 @@
-package dev._2lstudios.example.commands;
+package com.arkflame.modernlib.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -40,12 +40,12 @@ public class ModernArguments {
     public int getNumber(int index) {
         String text = getText(index);
 
-        if (text == null) return 0;
+        if (text == null) return -1;
 
         try {
             return Integer.parseInt(args[index]);
         } catch (NumberFormatException e) {
-            return 0;
+            return -1;
         }
     }
 

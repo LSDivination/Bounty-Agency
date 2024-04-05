@@ -1,8 +1,9 @@
-package dev._2lstudios.example.tasks;
+package com.arkflame.example.tasks;
 
 import org.bukkit.Bukkit;
 
-import dev._2lstudios.example.ExamplePlugin;
+import com.arkflame.example.ExamplePlugin;
+import com.arkflame.modernlib.tasks.ModernTask;
 
 public class ExampleTask extends ModernTask {
     public ExampleTask() {

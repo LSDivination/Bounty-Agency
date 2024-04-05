@@ -1,4 +1,4 @@
-package dev._2lstudios.example.tasks;
+package com.arkflame.modernlib.tasks;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -17,9 +17,10 @@ public abstract class ModernTask implements Runnable {
     public void register() {
         BukkitScheduler scheduler = plugin.getServer().getScheduler();
 
-        if (async)
+        if (async) {
             scheduler.runTaskTimerAsynchronously(plugin, this, time, time);
-        else
+        } else {
             scheduler.runTaskTimer(plugin, this, time, time);
+        }
     }
 }

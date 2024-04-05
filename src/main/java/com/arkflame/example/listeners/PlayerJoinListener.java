@@ -1,11 +1,11 @@
-package dev._2lstudios.example.listeners;
+package com.arkflame.example.listeners;
 
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import dev._2lstudios.example.ExamplePlugin;
+import com.arkflame.example.ExamplePlugin;
 
 public class PlayerJoinListener implements Listener {
     @EventHandler
