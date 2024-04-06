@@ -25,8 +25,8 @@ public class ExamplePlugin extends JavaPlugin {
         setInstance(this);
 
         // Save default config
-        config.saveDefault().load("config.yml");
-        messages.saveDefault().load("messages.yml");
+        config.saveDefault().load();
+        messages.saveDefault().load();
 
         // Register the example listener
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
