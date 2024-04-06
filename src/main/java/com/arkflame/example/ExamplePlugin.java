@@ -8,8 +8,8 @@ import com.arkflame.example.tasks.ExampleTask;
 import com.arkflame.modernlib.config.ConfigWrapper;
 
 public class ExamplePlugin extends JavaPlugin {
-    private ConfigWrapper config = new ConfigWrapper();
-    private ConfigWrapper messages = new ConfigWrapper();
+    private ConfigWrapper config = new ConfigWrapper("config.yml");
+    private ConfigWrapper messages = new ConfigWrapper("messages.yml");
 
     public ConfigWrapper getCfg() {
         return config;
@@ -25,10 +25,8 @@ public class ExamplePlugin extends JavaPlugin {
         setInstance(this);
 
         // Save default config
-        ConfigWrapper.saveDefaultConfig("config.yml");
-        ConfigWrapper.saveDefaultConfig("messages.yml");
-        config.load("config.yml");
-        messages.load("messages.yml");
+        config.saveDefault().load("config.yml");
+        messages.saveDefault().load("messages.yml");
 
         // Register the example listener
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
