@@ -3,6 +3,7 @@ package com.arkflame.modernlib.utils;
 import org.bukkit.Material;
 
 public class Materials {
+    private Materials() {}
 
     /**
      * Attempts to get the first valid Material from a list of names.
