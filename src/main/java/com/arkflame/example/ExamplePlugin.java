@@ -6,6 +6,7 @@ import com.arkflame.example.commands.ExampleCommand;
 import com.arkflame.example.listeners.PlayerJoinListener;
 import com.arkflame.example.tasks.ExampleTask;
 import com.arkflame.modernlib.config.ConfigWrapper;
+import com.arkflame.modernlib.menus.listeners.MenuListener;
 
 public class ExamplePlugin extends JavaPlugin {
     private ConfigWrapper config;
@@ -30,6 +31,8 @@ public class ExamplePlugin extends JavaPlugin {
 
         // Register the example listener
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+
+        this.getServer().getPluginManager().registerEvents(new MenuListener(), this);
 
         // Register the example task
         new ExampleTask().register();
