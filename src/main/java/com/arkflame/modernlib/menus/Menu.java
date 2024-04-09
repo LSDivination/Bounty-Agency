@@ -36,4 +36,13 @@ public class Menu implements InventoryHolder {
     public MenuItem getItem(int slot) {
         return items.getOrDefault(slot, null);
     }
+
+    public void setBackground(Material material, short data, String displayName, String... lore) {
+        MenuItem item = new MenuItem(material, 1, data, displayName, lore);
+        for (int i = 0; i < getSize(); i++) {
+            if (getItem(i) == null) {
+                setItem(i, item);
+            }
+        }
+    }
 }
