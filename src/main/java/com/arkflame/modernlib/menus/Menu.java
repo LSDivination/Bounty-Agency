@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -35,6 +36,10 @@ public class Menu implements InventoryHolder {
 
     public MenuItem getItem(int slot) {
         return items.getOrDefault(slot, null);
+    }
+
+    public int getSize() {
+        return inventory.getSize();
     }
 
     public void setBackground(Material material, short data, String displayName, String... lore) {
