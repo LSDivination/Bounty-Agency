@@ -3,8 +3,10 @@ package com.arkflame.modernlib.config;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -47,7 +49,6 @@ public class ConfigWrapper {
 
     public ConfigWrapper saveDefault() {
         if (path != null) {
-            ExamplePlugin.getInstance().getLogger().info("Save default config for " + fileName + " on " + path);
             File configFile = new File(path);
             if (!configFile.exists()) {
                 try (InputStream inputStream = ExamplePlugin.getInstance().getResource(fileName)) {
@@ -104,6 +105,31 @@ public class ConfigWrapper {
         return config != null;
     }
 
+    public List<String> getStringList(String key) {
+        if (!isLoaded())
+            return Collections.emptyList();
+        return config.getStringList(key);
+    }
+
+    public List<String> getTextList(String key) {
+        List<String> textList = new ArrayList<>();
+        List<String> stringList = getStringList(key);
+        for (String text : stringList) {
+            textList.add(ChatColors.color(text));
+        }
+        return textList;
+    }
+
+    public List<String> getTextList(String key, String... placeholders) {
+        List<String> textList = new ArrayList<>();
+        List<String> stringList = getStringList(key);
+        for (String text : stringList) {
+            String processedText = replacePlaceholders(text, placeholders);
+            textList.add(ChatColors.color(processedText));
+        }
+        return textList;
+    }
+
     public String getText(String key) {
         if (colorTextMap.containsKey(key)) {
             return colorTextMap.get(key);
@@ -116,16 +142,45 @@ public class ConfigWrapper {
         }
     }
 
+    public String getText(String key, String... placeholders) {
+        String text = getText(key);
+    
+        for (int i = 0; i < placeholders.length; i += 2) {
+            text = replacePlaceholders(text, placeholders);
+        }
+    
+        return text;
+    }    
+
+    private String replacePlaceholders(String text, String... placeholders) {
+        for (int i = 0; i < placeholders.length; i += 2) {
+            String placeholder = placeholders[i];
+            String replacement = i + 1 < placeholders.length ? placeholders[i + 1] : "";
+            text = text.replace(placeholder, replacement);
+        }
+        return text;
+    }
+
     public String getString(String key) {
         if (!isLoaded())
             return "undefined";
-        return config.getString(key);
+        return config.getString(key, "");
+    }
+
+    public int getInt(String key, int def) {
+        if (!isLoaded())
+            return def;
+        return config.getInt(key);
     }
 
     public int getInt(String key) {
+        return getInt(key, 0);
+    }
+
+    public boolean getBoolean(String key) {
         if (!isLoaded())
-            return 0;
-        return config.getInt(key);
+            return false;
+        return config.getBoolean(key);
     }
 
     public ConfigWrapper getSection(String key) {
@@ -148,5 +203,13 @@ public class ConfigWrapper {
         if (parent != null && !parent.exists()) {
             parent.mkdirs();
         }
+    }
+
+    public boolean isConfigurationSection(String path) {
+        return config.isConfigurationSection(path);
+    }
+
+    public ConfigurationSection getConfigurationSection(String path) {
+        return config.getConfigurationSection(path);
     }
 }
