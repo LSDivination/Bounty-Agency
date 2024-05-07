@@ -11,8 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-
-import com.arkflame.example.ExamplePlugin;
+import org.bukkit.plugin.Plugin;
 
 public abstract class ModernCommand extends Command {
     public ModernCommand(String name) {
@@ -24,7 +23,7 @@ public abstract class ModernCommand extends Command {
         setAliases(Arrays.asList(aliases));
     }
 
-    public void register() {
+    public void register(Plugin plugin) {
         unregisterBukkitCommand();
         try {
             // Get the command map to register the command
@@ -35,7 +34,7 @@ public abstract class ModernCommand extends Command {
             // Register the command
             registerMethod.invoke(commandMap, getName(), this);
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException |IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            ExamplePlugin.getInstance().getLogger().severe("Exception while handling command register");
+            plugin.getLogger().severe("Exception while handling command register");
             e.printStackTrace();
         }
     }

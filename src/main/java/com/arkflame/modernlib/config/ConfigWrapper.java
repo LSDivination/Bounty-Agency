@@ -12,13 +12,15 @@ import java.util.Set;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 
-import com.arkflame.example.ExamplePlugin;
 import com.arkflame.modernlib.utils.ChatColors;
 
 import java.nio.file.Files;
 
 public class ConfigWrapper {
+    private final Plugin plugin;
+
     private ConfigurationSection config = null;
     private String path = null;
     private String fileName = null;
@@ -26,21 +28,23 @@ public class ConfigWrapper {
     // This will store all text that contains color
     private Map<String, String> colorTextMap = new HashMap<>();
 
-    public ConfigWrapper(ConfigurationSection config) {
+    public ConfigWrapper(Plugin plugin, ConfigurationSection config) {
+        this.plugin = plugin;
         this.config = config;
     }
 
-    public ConfigWrapper(String fileName) {
+    public ConfigWrapper(Plugin plugin, String fileName) {
+        this.plugin = plugin;
         setFile(fileName);
     }
 
-    public ConfigWrapper() {
-        // Empty constructor
+    public ConfigWrapper(Plugin plugin) {
+        this.plugin = plugin;
     }
 
     public void setFile(String fileName) {
         if (fileName != null) {
-            this.path = new File(ExamplePlugin.getInstance().getDataFolder(), fileName).getPath();
+            this.path = new File(plugin.getDataFolder(), fileName).getPath();
         } else {
             this.path = null;
         }
@@ -51,7 +55,7 @@ public class ConfigWrapper {
         if (path != null) {
             File configFile = new File(path);
             if (!configFile.exists()) {
-                try (InputStream inputStream = ExamplePlugin.getInstance().getResource(fileName)) {
+                try (InputStream inputStream = plugin.getResource(fileName)) {
                         createParentFolder(configFile);
                     if (inputStream != null) {
                         Files.copy(inputStream, configFile.toPath());
@@ -189,7 +193,7 @@ public class ConfigWrapper {
         ConfigurationSection section = config.getConfigurationSection(key);
         if (section == null)
             return null;
-        return new ConfigWrapper(section);
+        return new ConfigWrapper(plugin, section);
     }
 
     public Set<String> getKeys() {
