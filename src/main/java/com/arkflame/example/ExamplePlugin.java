@@ -26,8 +26,8 @@ public class ExamplePlugin extends JavaPlugin {
         setInstance(this);
 
         // Save default config
-        config = new ConfigWrapper("config.yml").saveDefault().load();
-        messages = new ConfigWrapper("messages.yml").saveDefault().load();
+        config = new ConfigWrapper(this, "config.yml").saveDefault().load();
+        messages = new ConfigWrapper(this, "messages.yml").saveDefault().load();
 
         // Register the example listener
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
@@ -38,7 +38,7 @@ public class ExamplePlugin extends JavaPlugin {
         new ExampleTask().register();
 
         // Register example commands
-        new ExampleCommand().register();
+        new ExampleCommand().register(this);
     }
 
     private static ExamplePlugin instance;
