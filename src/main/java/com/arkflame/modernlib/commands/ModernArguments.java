@@ -24,7 +24,7 @@ public class ModernArguments {
         int count = args.length - index;
         if (count <= 0) return new String[0];
         String[] newArgs = new String[count];
-        for (int newIndex = 0; index < count; newIndex++) {
+        for (int newIndex = 0; newIndex < count; newIndex++) {
             newArgs[newIndex] = getText(index++);
         }
 
