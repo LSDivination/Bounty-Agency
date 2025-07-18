@@ -1,6 +1,7 @@
-name: ${name}
-description: ${description}
-author: ${author}
-main: ${mainClass}
-version: ${version}
-url: ${url}
+name: "BountyAgency"
+description: "Place bounties on other players for item rewards."
+author: "5aks"
+main: com.arkflame.bountyagency.BountyAgency
+version: 1.0
+api-version: 1.2
+folia-supported: true
