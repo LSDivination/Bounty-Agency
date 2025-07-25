@@ -97,11 +97,13 @@ public class BountyAgency extends JavaPlugin {
         BountyAgency.main = main;
     }
 
-    public List<Bounty> checkIncompleteBounties(Player victim) {
+    public List<Bounty> getAllIncompleteBounties(Player victim) {
         List<Bounty> incompleteBounties = new ArrayList<>();
         for (Bounty b : bounties.keySet()) {
             if (bounties.get(b) == victim) {
-                incompleteBounties.add(b);
+                if((b.getMode() & Bounty.IS_COMPLETE) == 0){
+                    incompleteBounties.add(b);
+                }
             }
         }
         return incompleteBounties;

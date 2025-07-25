@@ -25,7 +25,7 @@ public class DeathListener implements Listener {
         victim = event.getEntity();
         String victimName = victim.getName();
         Entity killerEntity = victim.getKiller();
-        List<Bounty> bounty = main.checkIncompleteBounties(victim);
+        List<Bounty> bounty = main.getAllIncompleteBounties(victim);
 
         if (bounty == null) { // Check for bounty
             return;
