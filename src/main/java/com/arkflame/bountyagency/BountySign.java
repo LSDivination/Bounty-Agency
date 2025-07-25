@@ -5,11 +5,11 @@ import org.bukkit.block.Block;
 public class BountySign {
 
     private static BountyAgency main;
-    private static final int ASSIGN_CONTRACT = 0;
-    private static final int LIST_INCOMPLETE_OPEN = 1;
-    private static final int LIST_INCOMPLETE_CLOSED = 2;
-    private static final int LIST_COMPLETE_OPEN = 3;
-    private static final int LIST_COMPLETE_CLOSED = 4;
+    public static final int ASSIGN_CONTRACT = 0;
+    public static final int LIST_IDLE = 1; //Implied closed
+    public static final int LIST_ACTIVE = 2;
+    public static final int LIST_OPEN = 4;
+    public static final int LIST_COMPLETE = 8;
     private static int type;
     private static int x;
     private static int y;
@@ -49,4 +49,15 @@ public class BountySign {
         return z;
     }
 
+    public void setType(int flags){
+        type = type | flags;
+    }
+
+    public boolean hasFlags(int flags){
+        return (type & flags) == flags;
+    }
+
+    public boolean missingFlags(int flags){
+        return (type & flags) == 0;
+    }
 }

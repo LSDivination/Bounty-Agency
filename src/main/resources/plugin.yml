@@ -2,6 +2,12 @@ name: "BountyAgency"
 description: "Place bounties on other players for item rewards."
 author: "5aks"
 main: com.arkflame.bountyagency.BountyAgency
-version: 1.0
+version: 0.01
 api-version: 1.2
 folia-supported: true
+libraries:
+  - com.h2database:h2:2.3.232
+commands:
+  bountyagency:
+    description: 
+    usage: /bountyagency

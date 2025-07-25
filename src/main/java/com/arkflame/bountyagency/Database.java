@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -24,14 +23,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import net.md_5.bungee.api.chat.hover.content.Item;
 
 //import net.md_5.bungee.api.chat.hover.content.Item;
 public class Database {
@@ -81,15 +78,6 @@ public class Database {
         }
     }
 
-    private boolean columnExists(Connection conn, String tableName, String columnName) {
-        try (ResultSet rs = conn.getMetaData().getColumns(null, null, tableName, columnName)) {
-            return rs.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     public void insertBounty(Bounty bounty) {
         String target = bounty.getTarget();
         String hitman = bounty.getHitman();
@@ -116,7 +104,7 @@ public class Database {
                     baseMetaStrings.add(" ");
                 }
             }
-            // Insert CLOB data
+            // IT'S CLOBBIN' TIME!
             try (PreparedStatement insertStatement = connection.prepareStatement(
                     "INSERT INTO BOUNTIES (target, hitman, rewards, itemmeta, mode, id) VALUES (?, ?, ?, ?, ?, ?)"
             )) {
@@ -200,8 +188,8 @@ public class Database {
     }
 
     //Fetch bounty signs on server start
-    public List<BountySign> fetchSigns() {
-        List<BountySign> signs = new ArrayList<BountySign>();
+    public HashMap<Block, BountySign> fetchSigns() {
+        HashMap<Block, BountySign> signs = new HashMap<Block, BountySign>();
         int type = 0;
         int x = 0;
         int y = 0;
@@ -223,7 +211,9 @@ public class Database {
                 y = resultSet.getInt("y");
                 z = resultSet.getInt("z");
                 BountySign sign = new BountySign(type, x, y, z);
-                signs.add(sign);
+                World world = Bukkit.getWorlds().get(0);
+                Block block = world.getBlockAt(x, y, z);
+                signs.put(block, sign);
             }
 
         } catch (SQLException e) {
@@ -232,7 +222,8 @@ public class Database {
         return signs;
     }
 
-    public ResultSet fetchSigns(BountySign sign) {
+    //TODO: Fetch bounty signs on interact
+    public ResultSet fetchSign(BountySign sign) {
         return null;
     }
 
@@ -283,12 +274,14 @@ public class Database {
                     ArrayList<String> stringMetaList = new ArrayList<String>(Arrays.asList(sbMeta.toString().split(DELIMITER)));
                     meta = new ItemMeta[stringMetaList.size()];
                     for (int i = 0; i < stringMetaList.size(); i++) {
-                        //Deserialize the ItemMeta at this index
-                        String yaml = Base64Coder.decodeString(stringMetaList.get(i));
-                        YamlConfiguration config = new YamlConfiguration();
-                        config.loadFromString(yaml);
+                        //Get the ItemMeta at this index
+                        String s = stringMetaList.get(i);
                         //Check if there is a placeholder for ItemMeta
-                        if (!yaml.equals(" ")) {
+                        if (!s.equals(" ")) {
+                            //Decode ItemMeta and assign to ItemStack
+                            String yaml = Base64Coder.decodeString(s);
+                            YamlConfiguration config = new YamlConfiguration();
+                            config.loadFromString(yaml);
                             meta[i] = (ItemMeta) config.get("itemmeta");
                             item[i].setItemMeta(meta[i]);
                         }

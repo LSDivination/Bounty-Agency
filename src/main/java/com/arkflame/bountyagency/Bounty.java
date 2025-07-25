@@ -10,6 +10,7 @@ public class Bounty {
     BountyAgency main;
     String target;
     String hitman;
+    String killer;
     ItemStack[] rewards;
     ItemMeta[] rewardsMeta;
     int mode;
@@ -57,12 +58,21 @@ public class Bounty {
         return rewardsMeta;
     }
 
-    public void setMode(int mode) {
-        this.mode = this.mode | mode;
+    public void closeBounty() {
+        mode = mode & ~IS_ACTIVE;
+        mode |= IS_COMPLETE;
     }
 
     public int getMode() {
         return mode;
+    }
+
+    public boolean hasFlags(int flags){
+        return (mode & flags) == flags;
+    }
+
+    public boolean missingFlags(int flags){
+        return (mode & flags) == 0;
     }
 
     public void setID(int id) {
@@ -73,4 +83,19 @@ public class Bounty {
         return id;
     }
 
+    public String listRewards(){
+        String rewardsList = null;
+        for(ItemStack item : rewards){
+            //TODO: Build string of rewards list
+        }
+        return rewardsList;
+    }
+
+    public void setKiller(String killer){
+        this.killer = killer;
+    }
+
+    public String getKiller(){
+        return killer;
+    }
 }
